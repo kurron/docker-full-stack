@@ -9,15 +9,7 @@ Vagrant.configure("2") do |config|
     config.vm.boot_timeout = 300
     config.vm.box = "ubuntu/xenial64"
     config.vm.box_check_update = true
-#   config.vm.box_download_checksum = "89f9ddb3ea0f41e834059f09b0a8e7d2"
-#   config.vm.box_download_checksum_type = "md5"
-#   config.vm.box_url = "https://d2eko4jw6kz4m.cloudfront.net/5.1.2/xenial-x64-desktop.box"
     config.vm.graceful_halt_timeout = 60
-#   config.vm.post_up_message = "Login credentials are vagrant/vagrant"
-#   config.vm.usable_port_range = 2200..2250
-
-#   config.ssh.password = "vagrant"
-#   config.ssh.username = "vagrant"
 
     config.vm.provider "virtualbox" do |v|
         v.gui = false
@@ -33,9 +25,9 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "file", source: "files/inventory", destination: "/tmp/inventory"
 
-    config.vm.provision "shell" do |remote|
-        remote.path = "scripts/install-ansible.sh"
-    end
+#   config.vm.provision "shell" do |remote|
+#       remote.path = "scripts/install-ansible.sh"
+#   end
 
 #   config.vm.provision "shell" do |remote|
 #       remote.path = "scripts/install-docker.sh"
@@ -53,5 +45,17 @@ Vagrant.configure("2") do |config|
             v.customize ["modifyvm", :id, "--vram", "12"]
             v.customize ["modifyvm", :id, "--cpus", "1"]
         end
+        alpha.vm.provision "shell", inline: "echo alpha"
+    end
+
+    config.vm.define "bravo" do |bravo|
+        bravo.vm.provider "virtualbox" do |v|
+            v.gui = true
+            v.name = "everywhere.bravo"
+            v.customize ["modifyvm", :id, "--memory", "1024"]
+            v.customize ["modifyvm", :id, "--vram", "12"]
+            v.customize ["modifyvm", :id, "--cpus", "1"]
+        end
+        bravo.vm.provision "shell", inline: "echo bravo"
     end
 end
