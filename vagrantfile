@@ -7,17 +7,17 @@ Vagrant.configure("2") do |config|
     config.vagrant.host = :detect
 
     config.vm.boot_timeout = 300
-    config.vm.box = "xenial-x64-desktop/5.1.2"
+    config.vm.box = "ubuntu/xenial64"
     config.vm.box_check_update = true
-    config.vm.box_download_checksum = "89f9ddb3ea0f41e834059f09b0a8e7d2"
-    config.vm.box_download_checksum_type = "md5"
-    config.vm.box_url = "https://d2eko4jw6kz4m.cloudfront.net/5.1.2/xenial-x64-desktop.box"
+#   config.vm.box_download_checksum = "89f9ddb3ea0f41e834059f09b0a8e7d2"
+#   config.vm.box_download_checksum_type = "md5"
+#   config.vm.box_url = "https://d2eko4jw6kz4m.cloudfront.net/5.1.2/xenial-x64-desktop.box"
     config.vm.graceful_halt_timeout = 60
-    config.vm.post_up_message = "Login credentials are vagrant/vagrant"
-    config.vm.usable_port_range = 2200..2250
+#   config.vm.post_up_message = "Login credentials are vagrant/vagrant"
+#   config.vm.usable_port_range = 2200..2250
 
-    config.ssh.password = "vagrant"
-    config.ssh.username = "vagrant"
+#   config.ssh.password = "vagrant"
+#   config.ssh.username = "vagrant"
 
     config.vm.provider "virtualbox" do |v|
         v.gui = false
@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--largepages", "on"]
         v.customize ["modifyvm", :id, "--acpi", "on"]
         v.customize ["modifyvm", :id, "--nictype1", "virtio"]
-        v.customize ["modifyvm", :id, "--groups", "/JVM Development"]
+        v.customize ["modifyvm", :id, "--groups", "/Docker Everywhere"]
     end
 
     config.vm.provision "file", source: "files/inventory", destination: "/tmp/inventory"
@@ -37,37 +37,21 @@ Vagrant.configure("2") do |config|
         remote.path = "scripts/install-ansible.sh"
     end
 
-    config.vm.provision "shell" do |remote|
-        remote.path = "scripts/install-docker.sh"
-    end
+#   config.vm.provision "shell" do |remote|
+#       remote.path = "scripts/install-docker.sh"
+#   end
 
-    config.vm.provision "shell" do |remote|
-        remote.path = "scripts/install-development-tools.sh"
-    end
+#   config.vm.provision "shell" do |remote|
+#       remote.path = "scripts/install-operations-tools.sh"
+#   end
 
-    config.vm.provision "shell" do |remote|
-        remote.path = "scripts/install-operations-tools.sh"
-    end
-
-    project = ENV['USER_PLAYS']
-    config.vm.provision "shell" do |custom|
-        custom.path = "scripts/install-custom.sh"
-        custom.args = project 
-    end
-
-    project = ENV['CORPORATE_PLAYS']
-    config.vm.provision "shell" do |corporate|
-        corporate.path = "scripts/install-corporate.sh"
-        corporate.args = project 
-    end
-
-    config.vm.define "desktop" do |desktop|
-        desktop.vm.provider "virtualbox" do |v|
+    config.vm.define "alpha" do |alpha|
+        alpha.vm.provider "virtualbox" do |v|
             v.gui = true
-            v.name = "jvmguy.desktop"
-            v.customize ["modifyvm", :id, "--memory", "6144"]
-            v.customize ["modifyvm", :id, "--vram", "24"]
-            v.customize ["modifyvm", :id, "--cpus", "2"]
+            v.name = "everywhere.alpha"
+            v.customize ["modifyvm", :id, "--memory", "1024"]
+            v.customize ["modifyvm", :id, "--vram", "12"]
+            v.customize ["modifyvm", :id, "--cpus", "1"]
         end
     end
 end
