@@ -1,1 +1,2 @@
-localhost ansible_connection=local
+alpha ansible_connection=local
+bravo ansible_connection=local
