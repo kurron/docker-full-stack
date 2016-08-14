@@ -67,6 +67,29 @@ Vagrant.configure("2") do |config|
             v.customize ["modifyvm", :id, "--vram", "12"]
             v.customize ["modifyvm", :id, "--cpus", "1"]
         end
-        bravo.vm.provision "shell", inline: "echo bravo"
+    end
+
+    config.vm.define "charlie" do |charlie|
+        charlie.vm.hostname = "charlie"
+        charlie.vm.network "private_network", ip: "10.10.20.30"
+        charlie.vm.provider "virtualbox" do |v|
+            v.gui = true
+            v.name = "everywhere.charlie"
+            v.customize ["modifyvm", :id, "--memory", "1024"]
+            v.customize ["modifyvm", :id, "--vram", "12"]
+            v.customize ["modifyvm", :id, "--cpus", "1"]
+        end
+    end
+
+    config.vm.define "delta" do |delta|
+        delta.vm.hostname = "delta"
+        delta.vm.network "private_network", ip: "10.10.20.40"
+        delta.vm.provider "virtualbox" do |v|
+            v.gui = true
+            v.name = "everywhere.delta"
+            v.customize ["modifyvm", :id, "--memory", "1024"]
+            v.customize ["modifyvm", :id, "--vram", "12"]
+            v.customize ["modifyvm", :id, "--cpus", "1"]
+        end
     end
 end
