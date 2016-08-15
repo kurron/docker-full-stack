@@ -7,7 +7,9 @@ Vagrant.configure("2") do |config|
     config.vagrant.host = :detect
 
     config.vm.boot_timeout = 300
-    config.vm.box = "ubuntu/xenial64"
+# Xenial does not have the correct VirtualBox Guest additions so the shared folder does not get mounted
+#   config.vm.box = "ubuntu/xenial64"
+    config.vm.box = "ubuntu/trusty64"
     config.vm.box_check_update = true
     config.vm.graceful_halt_timeout = 60
 
@@ -23,21 +25,8 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--groups", "/Docker Everywhere"]
     end
 
-    config.vm.provision "shell", inline: "mkdir /vagrant || true"
     config.vm.provision "file", source: "files/inventory", destination: "/tmp/inventory"
     config.vm.provision "file", source: "playbook.yml", destination: "/tmp/playbook.yml"
-
-#   config.vm.provision "shell" do |remote|
-#       remote.path = "scripts/install-ansible.sh"
-#   end
-
-#   config.vm.provision "shell" do |remote|
-#       remote.path = "scripts/install-docker.sh"
-#   end
-
-#   config.vm.provision "shell" do |remote|
-#       remote.path = "scripts/install-operations-tools.sh"
-#   end
 
     config.vm.define "alpha" do |alpha|
         alpha.vm.hostname = "alpha"
@@ -59,7 +48,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "bravo" do |bravo|
         bravo.vm.hostname = "bravo"
-        bravo.vm.network "private_network", ip: "10.10.20.10"
+        bravo.vm.network "private_network", ip: "10.10.10.20"
         bravo.vm.provider "virtualbox" do |v|
             v.gui = true
             v.name = "everywhere.bravo"
@@ -71,7 +60,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "charlie" do |charlie|
         charlie.vm.hostname = "charlie"
-        charlie.vm.network "private_network", ip: "10.10.20.30"
+        charlie.vm.network "private_network", ip: "10.10.10.30"
         charlie.vm.provider "virtualbox" do |v|
             v.gui = true
             v.name = "everywhere.charlie"
@@ -83,7 +72,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "delta" do |delta|
         delta.vm.hostname = "delta"
-        delta.vm.network "private_network", ip: "10.10.20.40"
+        delta.vm.network "private_network", ip: "10.10.10.40"
         delta.vm.provider "virtualbox" do |v|
             v.gui = true
             v.name = "everywhere.delta"

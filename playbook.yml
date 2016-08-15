@@ -1,5 +1,5 @@
-- name: Alpha Provisions 
-  hosts: alpha 
+- name: Alpha Provisions
+  hosts: alpha
   become: True
   tasks:
       - apt: name=tree state=latest
