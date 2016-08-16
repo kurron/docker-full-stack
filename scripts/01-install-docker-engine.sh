@@ -46,6 +46,7 @@ CMD="docker-machine create --driver generic \
                            --generic-ssh-key ${BRAVO_SECURE_KEY} \
                            --swarm \
                            --swarm-master \
+                           --swarm-addr 10.10.10.20 \
                            --swarm-discovery consul://10.10.10.10:8500 \
      bravo"
     echo Docker Machine is provisioning bravo at 10.10.10.20 to be the Swarm Master 
@@ -72,6 +73,7 @@ for c in "${!hosts[@]}"; do
                                --generic-ip-address=${IP} \
                                --generic-ssh-key ${SECURE_KEY} \
                                --swarm \
+                               --swarm-host tcp://10.10.10.20:3376 \
                                --swarm-discovery consul://10.10.10.10:8500 \
          ${NAME}"
     echo Docker Machine is provisioning ${NAME} at ${IP} to be a Swarm Slave
