@@ -13,7 +13,7 @@ sudo chmod 0400 ${ALPHA_SECURE_KEY}
 CMD="docker-machine create --driver generic \
                            --generic-ip-address=10.10.10.10 \
                            --generic-ssh-key ${ALPHA_SECURE_KEY} \
-     alpha"
+                           alpha"
     echo Docker Machine is provisioning alpha at 10.10.10.10 to run Consul
 #   echo $CMD
     $CMD
@@ -48,7 +48,7 @@ CMD="docker-machine create --driver generic \
                            --swarm-master \
                            --swarm-addr 10.10.10.20 \
                            --swarm-discovery consul://10.10.10.10:8500 \
-     bravo"
+                           bravo"
     echo Docker Machine is provisioning bravo at 10.10.10.20 to be the Swarm Master 
 #   echo $CMD
     $CMD
@@ -75,9 +75,16 @@ for c in "${!hosts[@]}"; do
                                --swarm \
                                --swarm-host tcp://10.10.10.20:3376 \
                                --swarm-discovery consul://10.10.10.10:8500 \
-         ${NAME}"
+                               ${NAME}"
     echo Docker Machine is provisioning ${NAME} at ${IP} to be a Swarm Slave
 #   echo $CMD
     $CMD
 done
+
+echo show the created engines
+docker-machine ls
+
+echo Display the cluster information by connecting to bravo
+eval "$(docker-machine env --swarm bravo)"
+docker info
 
