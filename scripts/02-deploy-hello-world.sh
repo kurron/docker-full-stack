@@ -10,8 +10,12 @@ TWO="docker run --detach \
                 --net=none \
                 dockercloud/hello-world:latest"
 
+THREE="docker run --detach \
+                  --name=hello-three \
+                  --net=none \
+                  dockercloud/hello-world:latest"
+
 # point to the swarm manager
-$(docker-machine env --swarm bravo)
 eval "$(docker-machine env --swarm bravo)"
 
 docker info
@@ -21,6 +25,9 @@ $ONE
 
 echo Deploying the second container
 $TWO
+
+echo Deploying the third container
+$THREE
 
 echo Displaying status of the containers in the cluster
 docker ps

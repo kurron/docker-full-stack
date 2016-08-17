@@ -13,6 +13,8 @@ sudo chmod 0400 ${ALPHA_SECURE_KEY}
 CMD="docker-machine create --driver generic \
                            --generic-ip-address=10.10.10.10 \
                            --generic-ssh-key ${ALPHA_SECURE_KEY} \
+                           --engine-label size=small \
+                           --engine-label role=console \
                            alpha"
     echo Docker Machine is provisioning alpha at 10.10.10.10 to run Consul
 #   echo $CMD
@@ -44,6 +46,8 @@ sudo chmod 0400 ${BRAVO_SECURE_KEY}
 CMD="docker-machine create --driver generic \
                            --generic-ip-address=10.10.10.20 \
                            --generic-ssh-key ${BRAVO_SECURE_KEY} \
+                           --engine-label size=small \
+                           --engine-label role=swarm-master \
                            --swarm \
                            --swarm-master \
                            --swarm-addr 10.10.10.20 \
@@ -59,6 +63,7 @@ declare -A hosts
 
 hosts[charlie]=10.10.10.30
 hosts[delta]=10.10.10.40
+hosts[echo]=10.10.10.50
 
 for c in "${!hosts[@]}"; do
     NAME=$c
@@ -72,6 +77,8 @@ for c in "${!hosts[@]}"; do
     CMD="docker-machine create --driver generic \
                                --generic-ip-address=${IP} \
                                --generic-ssh-key ${SECURE_KEY} \
+                               --engine-label size=medium \
+                               --engine-label role=swarm-node \
                                --swarm \
                                --swarm-host tcp://10.10.10.20:3376 \
                                --swarm-discovery consul://10.10.10.10:8500 \
