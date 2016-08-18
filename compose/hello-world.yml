@@ -1,0 +1,14 @@
+version: '2'
+services:
+    hello-world-one:
+        image: dockercloud/hello-world:latest
+        container_name: "hello-one"
+        network_mode: "showcase"
+    hello-world-two:
+        image: dockercloud/hello-world:latest
+        container_name: "hello-two"
+        network_mode: "showcase"
+    hello-world-three:
+        image: dockercloud/hello-world:latest
+        container_name: "hello-three"
+        network_mode: "showcase"
