@@ -48,6 +48,8 @@ CMD="docker-machine create --driver generic \
                            --generic-ssh-key ${BRAVO_SECURE_KEY} \
                            --engine-label size=small \
                            --engine-label role=swarm-master \
+                           --engine-opt=cluster-store=consul://10.10.10.10:8500 \
+                           --engine-opt=cluster-advertise=eth1:2376 \
                            --swarm \
                            --swarm-master \
                            --swarm-addr 10.10.10.20 \
@@ -79,6 +81,8 @@ for c in "${!hosts[@]}"; do
                                --generic-ssh-key ${SECURE_KEY} \
                                --engine-label size=medium \
                                --engine-label role=swarm-node \
+                               --engine-opt=cluster-store=consul://10.10.10.10:8500 \
+                               --engine-opt=cluster-advertise=eth1:2376 \
                                --swarm \
                                --swarm-host tcp://10.10.10.20:3376 \
                                --swarm-discovery consul://10.10.10.10:8500 \

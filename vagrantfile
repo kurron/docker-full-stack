@@ -32,7 +32,6 @@ Vagrant.configure("2") do |config|
         alpha.vm.hostname = "alpha"
         alpha.vm.network "private_network", ip: "10.10.10.10"
         alpha.vm.provider "virtualbox" do |v|
-            v.gui = true
             v.name = "everywhere.alpha"
             v.customize ["modifyvm", :id, "--memory", "1024"]
             v.customize ["modifyvm", :id, "--vram", "12"]
@@ -50,7 +49,6 @@ Vagrant.configure("2") do |config|
         bravo.vm.hostname = "bravo"
         bravo.vm.network "private_network", ip: "10.10.10.20"
         bravo.vm.provider "virtualbox" do |v|
-            v.gui = true
             v.name = "everywhere.bravo"
             v.customize ["modifyvm", :id, "--memory", "1024"]
             v.customize ["modifyvm", :id, "--vram", "12"]
@@ -62,7 +60,6 @@ Vagrant.configure("2") do |config|
         charlie.vm.hostname = "charlie"
         charlie.vm.network "private_network", ip: "10.10.10.30"
         charlie.vm.provider "virtualbox" do |v|
-            v.gui = true
             v.name = "everywhere.charlie"
             v.customize ["modifyvm", :id, "--memory", "1024"]
             v.customize ["modifyvm", :id, "--vram", "12"]
@@ -74,7 +71,6 @@ Vagrant.configure("2") do |config|
         delta.vm.hostname = "delta"
         delta.vm.network "private_network", ip: "10.10.10.40"
         delta.vm.provider "virtualbox" do |v|
-            v.gui = true
             v.name = "everywhere.delta"
             v.customize ["modifyvm", :id, "--memory", "1024"]
             v.customize ["modifyvm", :id, "--vram", "12"]
@@ -86,7 +82,6 @@ Vagrant.configure("2") do |config|
         echo.vm.hostname = "echo"
         echo.vm.network "private_network", ip: "10.10.10.50"
         echo.vm.provider "virtualbox" do |v|
-            v.gui = true
             v.name = "everywhere.echo"
             v.customize ["modifyvm", :id, "--memory", "1024"]
             v.customize ["modifyvm", :id, "--vram", "12"]
