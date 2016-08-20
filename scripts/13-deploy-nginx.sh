@@ -6,6 +6,7 @@ docker-machine ssh bravo sudo docker service create --mode replicated \
                                                     --name nginx \
                                                     --update-delay 10s \
                                                     --network showcase \
+                                                    --endpoint-mode dnsrr \
                                                     nginx:latest
 
 echo Inspect the service

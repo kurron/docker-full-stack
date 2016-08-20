@@ -6,7 +6,7 @@ docker-machine ssh bravo sudo docker service create --mode replicated \
                                                     --name busybox \
                                                     --update-delay 10s \
                                                     --network showcase \
-                                                    busybox:latest
+                                                    busybox:latest sleep 3000
 
 echo Inspect the service
 docker-machine ssh bravo sudo docker service inspect --pretty busybox
