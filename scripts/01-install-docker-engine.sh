@@ -47,7 +47,7 @@ CMD="docker-machine create --driver generic \
                            --generic-ip-address=10.10.10.20 \
                            --generic-ssh-key ${BRAVO_SECURE_KEY} \
                            --engine-label size=small \
-                           --engine-label role=swarm-master \
+                           --engine-label role=manager \
                            --engine-opt=cluster-store=consul://10.10.10.10:8500 \
                            --engine-opt=cluster-advertise=eth1:2376 \
                            --swarm \
@@ -80,7 +80,7 @@ for c in "${!hosts[@]}"; do
                                --generic-ip-address=${IP} \
                                --generic-ssh-key ${SECURE_KEY} \
                                --engine-label size=medium \
-                               --engine-label role=swarm-node \
+                               --engine-label role=worker \
                                --engine-opt=cluster-store=consul://10.10.10.10:8500 \
                                --engine-opt=cluster-advertise=eth1:2376 \
                                --swarm \
