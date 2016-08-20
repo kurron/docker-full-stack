@@ -3,13 +3,12 @@
 echo Deploying a global service
 docker-machine ssh bravo sudo docker service create --mode global --name hello-global alpine ping docker.com
 
+echo Inspect the service
+docker-machine ssh bravo sudo docker service inspect --pretty hello-global
+
 echo List the logical status of the global service
 docker-machine ssh bravo sudo docker service ls
 
-echo List the physical status of the global service
-docker-machine ssh bravo sudo docker node ps bravo
-docker-machine ssh bravo sudo docker node ps charlie
-docker-machine ssh bravo sudo docker node ps delta
-docker-machine ssh bravo sudo docker node ps echo
-
+echo List where the service is running
+docker-machine ssh bravo sudo docker service ps hello-global
 
