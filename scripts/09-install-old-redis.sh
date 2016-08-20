@@ -5,6 +5,7 @@ docker-machine ssh bravo sudo docker service create --mode replicated \
                                                     --replicas 4 \
                                                     --name redis \
                                                     --update-delay 10s \
+                                                    --network showcase \
                                                     redis:3.0.6
 
 echo Inspect the service
