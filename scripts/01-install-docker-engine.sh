@@ -18,6 +18,8 @@ sudo chmod 0400 ${ALPHA_SECURE_KEY}
 CMD="docker-machine create --driver generic \
                            --generic-ip-address=10.10.10.10 \
                            --generic-ssh-key ${ALPHA_SECURE_KEY} \
+                           --engine-storage-driver overlay \
+                           --engine-opt graph=/opt/docker \
                            --engine-label size=small \
                            --engine-label role=console \
                            alpha"
@@ -53,6 +55,8 @@ sudo chmod 0400 ${BRAVO_SECURE_KEY}
 CMD="docker-machine create --driver generic \
                            --generic-ip-address=10.10.10.20 \
                            --generic-ssh-key ${BRAVO_SECURE_KEY} \
+                           --engine-storage-driver overlay \
+                           --engine-opt graph=/opt/docker \
                            --engine-label size=small \
                            --engine-label role=manager \
                            bravo"
@@ -82,6 +86,8 @@ for c in "${!hosts[@]}"; do
     CMD="docker-machine create --driver generic \
                                --generic-ip-address=${IP} \
                                --generic-ssh-key ${SECURE_KEY} \
+                               --engine-storage-driver overlay \
+                               --engine-opt graph=/opt/docker \
                                --engine-label size=medium \
                                --engine-label role=worker \
                                ${NAME}"

@@ -7,11 +7,20 @@ Vagrant.configure("2") do |config|
     config.vagrant.host = :detect
 
     config.vm.boot_timeout = 300
+    config.vm.graceful_halt_timeout = 60
 # Xenial does not have the correct VirtualBox Guest additions so the shared folder does not get mounted
 #   config.vm.box = "ubuntu/xenial64"
-    config.vm.box = "ubuntu/trusty64"
+#   config.vm.box = "ubuntu/trusty64"
+#   config.vm.box_check_update = true
+
+    config.vm.box = "xenial-x64-server/5.0.24"
     config.vm.box_check_update = true
-    config.vm.graceful_halt_timeout = 60
+    config.vm.box_download_checksum = "31c14fd44ca98506729985bb57e65864"
+    config.vm.box_download_checksum_type = "md5"
+    config.vm.box_url = "https://d2eko4jw6kz4m.cloudfront.net/5.0.24/xenial-x64-server.box"
+
+    config.ssh.password = "vagrant"
+    config.ssh.username = "vagrant"
 
     config.vm.provider "virtualbox" do |v|
         v.gui = false
@@ -29,7 +38,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "playbook.yml", destination: "/tmp/playbook.yml"
 
     config.vm.define "alpha" do |alpha|
-        alpha.vm.hostname = "alpha"
+#       alpha.vm.hostname = "alpha"
         alpha.vm.network "private_network", ip: "10.10.10.10"
         alpha.vm.provider "virtualbox" do |v|
             v.name = "everywhere.alpha"
@@ -46,7 +55,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "bravo" do |bravo|
-        bravo.vm.hostname = "bravo"
+#       bravo.vm.hostname = "bravo"
         bravo.vm.network "private_network", ip: "10.10.10.20"
         bravo.vm.provider "virtualbox" do |v|
             v.name = "everywhere.bravo"
@@ -57,7 +66,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "charlie" do |charlie|
-        charlie.vm.hostname = "charlie"
+#       charlie.vm.hostname = "charlie"
         charlie.vm.network "private_network", ip: "10.10.10.30"
         charlie.vm.provider "virtualbox" do |v|
             v.name = "everywhere.charlie"
@@ -68,7 +77,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "delta" do |delta|
-        delta.vm.hostname = "delta"
+#       delta.vm.hostname = "delta"
         delta.vm.network "private_network", ip: "10.10.10.40"
         delta.vm.provider "virtualbox" do |v|
             v.name = "everywhere.delta"
@@ -79,7 +88,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.define "echo" do |echo|
-        echo.vm.hostname = "echo"
+#       echo.vm.hostname = "echo"
         echo.vm.network "private_network", ip: "10.10.10.50"
         echo.vm.provider "virtualbox" do |v|
             v.name = "everywhere.echo"

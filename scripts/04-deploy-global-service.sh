@@ -10,5 +10,5 @@ echo List the logical status of the global service
 docker-machine ssh bravo sudo docker service ls
 
 echo List where the service is running
-docker-machine ssh bravo sudo docker service ps hello-global
+watch 'docker-machine ssh bravo sudo docker service ps hello-global'
 
