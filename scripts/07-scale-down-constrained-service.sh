@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo Deploying a constrained service
+echo Scaling the constrained service
 docker-machine ssh bravo sudo docker service scale hello-constrained=1
 
 echo Inspect the service
