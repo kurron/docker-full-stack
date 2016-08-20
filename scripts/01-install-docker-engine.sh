@@ -1,10 +1,15 @@
 #!/bin/bash
 
+# IMPORTANT: As of Docker 1.12.0, Swarm is built into Docker.  Be careful not to confuse or mix
+# instructions that use the older container-based Swarm with the new stuff.  They are incompatible!
+
 export GENERIC_ENGINE_PORT=2376
 export GENERIC_SSH_USER=vagrant
 export GENERIC_SSH_PORT=22
 
-# configure Alpha as the master control node
+#################
+# Alpha will be the console node
+#################
 ALPHA_RAW_KEY="/vagrant/.vagrant/machines/alpha/virtualbox/private_key"
 ALPHA_SECURE_KEY="/tmp/alpha_key"
 cp --verbose ${ALPHA_RAW_KEY} ${ALPHA_SECURE_KEY}
@@ -37,7 +42,9 @@ CONSUL="sudo docker run --detach \
 echo $CONSUL
 $CONSUL
 
-# Configure Bravo to be the Swarm Manager
+#################
+# Bravo will be the Swarm Manager
+#################
 BRAVO_RAW_KEY="/vagrant/.vagrant/machines/bravo/virtualbox/private_key"
 BRAVO_SECURE_KEY="/tmp/bravo_key"
 cp --verbose ${BRAVO_RAW_KEY} ${BRAVO_SECURE_KEY}
@@ -48,19 +55,15 @@ CMD="docker-machine create --driver generic \
                            --generic-ssh-key ${BRAVO_SECURE_KEY} \
                            --engine-label size=small \
                            --engine-label role=manager \
-                           --engine-opt=cluster-store=consul://10.10.10.10:8500 \
-                           --engine-opt=cluster-advertise=eth1:2376 \
-                           --swarm \
-                           --swarm-master \
-                           --swarm-addr 10.10.10.20 \
-                           --swarm-discovery consul://10.10.10.10:8500 \
                            bravo"
     echo Docker Machine is provisioning bravo at 10.10.10.20 to be the Swarm Master 
 #   echo $CMD
     $CMD
 
 
-# Configure Charlie and Delta to be the Swarm Nodes
+#################
+# Charlie, Delta and Echo will be the Swarm Workers
+#################
 declare -A hosts
 
 hosts[charlie]=10.10.10.30
@@ -81,21 +84,12 @@ for c in "${!hosts[@]}"; do
                                --generic-ssh-key ${SECURE_KEY} \
                                --engine-label size=medium \
                                --engine-label role=worker \
-                               --engine-opt=cluster-store=consul://10.10.10.10:8500 \
-                               --engine-opt=cluster-advertise=eth1:2376 \
-                               --swarm \
-                               --swarm-host tcp://10.10.10.20:3376 \
-                               --swarm-discovery consul://10.10.10.10:8500 \
                                ${NAME}"
-    echo Docker Machine is provisioning ${NAME} at ${IP} to be a Swarm Slave
+    echo Docker Machine is provisioning ${NAME} at ${IP} to be a Swarm Worker
 #   echo $CMD
     $CMD
 done
 
 echo show the created engines
 docker-machine ls
-
-echo Display the cluster information by connecting to bravo
-eval "$(docker-machine env --swarm bravo)"
-docker info
 
