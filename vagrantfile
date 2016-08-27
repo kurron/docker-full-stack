@@ -46,6 +46,9 @@ Vagrant.configure("2") do |config|
             v.customize ["modifyvm", :id, "--vram", "12"]
             v.customize ["modifyvm", :id, "--cpus", "1"]
         end
+        alpha.vm.provision "file", source: "scripts", destination: "/home/vagrant/scripts"
+        alpha.vm.provision "file", source: "compose", destination: "/home/vagrant/compose"
+        alpha.vm.provision "shell", inline: "chmod a+x /home/vagrant/scripts/*.sh"
         alpha.vm.provision "ansible_local" do |ansible|
              ansible.playbook = "/tmp/playbook.yml"
              ansible.verbose  = true
